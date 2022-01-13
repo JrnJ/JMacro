@@ -21,8 +21,7 @@ int main()
 
 				std::cout << "Starting Macro" << std::endl;
 
-				JMacro::Keystroke(KeyCode::A);
-				JMacro::TypeText("hello there you hii");
+				JMacro::TypeText("AabBcCdD.>;:/?");
 				
 				std::cout << "Macro Finished" << std::endl;
 			}

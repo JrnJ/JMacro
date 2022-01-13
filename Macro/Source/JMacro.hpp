@@ -32,7 +32,10 @@ namespace JMacro
 	//const void SetMousePosition();
 
 	// Keyboard
-	const void Keystroke(KeyCode key);
+	const void Keystroke(KeyCode key, bool capital = false);
+	const void Keystroke(int key, bool capital = false); // https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+	/*const void KeyDown();
+	const void KeyUp();*/
 	const void TypeText(std::string text);
 };
 

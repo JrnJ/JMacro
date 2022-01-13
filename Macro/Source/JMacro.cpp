@@ -53,6 +53,8 @@ const int KeyToValue(KeyCode key)
 
         // Actions
         case KeyCode::Enter: return 0x0D;
+        case KeyCode::LeftShift: return 0x10;
+        case KeyCode::RightShift: return 0x10;
             
         // Key not found
         default:
@@ -141,15 +143,40 @@ const void KeyUp(int key)
     SendInput(1, &inputs, sizeof(INPUT));
 }
 
-const void JMacro::Keystroke(KeyCode key)
+const void KeystrokeCapital(int key)
+{
+    int shiftKey = KeyToValue(KeyCode::LeftShift);
+
+    KeyDown(shiftKey);
+    KeyDown(key);
+    KeyUp(key);
+    KeyUp(shiftKey);
+}
+
+const void JMacro::Keystroke(KeyCode key, bool capital)
 {
     int intKey = KeyToValue(key);
 
-    if (intKey)
+    if (capital) 
+        KeystrokeCapital(intKey);
+    else
+    {
+        KeyDown(intKey);
+        KeyUp(intKey);
+    }
 
-    KeyDown(intKey);
-    Sleep(10);
-    KeyUp(intKey);
+    return void();
+}
+
+const void JMacro::Keystroke(int key, bool capital)
+{
+    if (capital)
+        KeystrokeCapital(key);
+    else
+    {
+        KeyDown(key);
+        KeyUp(key);
+    }
 
     return void();
 }
@@ -158,10 +185,14 @@ const void JMacro::TypeText(std::string text)
 {
     for (std::string::size_type i = 0; i < text.size(); i++) 
     {
-        int intKey = CharToValue(text[i]);
+        int intKey = CharToValue(std::tolower(text[i]));
 
-        KeyDown(intKey);
-        Sleep(10);
-        KeyUp(intKey);
+        if (std::isupper(text[i]))
+            KeystrokeCapital(intKey);
+        else
+        {
+            KeyDown(intKey);
+            KeyUp(intKey);
+        }
     }
 }
