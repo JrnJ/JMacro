@@ -49,6 +49,7 @@ const int KeyToValue(KeyCode key)
         // Special
         case KeyCode::BackSlash: return 0xBF;
         case KeyCode::ForwardSlash: return 0xE2;
+        case KeyCode::Dot: return 0xBE;
 
         // Actions
         case KeyCode::Enter: return 0x0D;
@@ -99,7 +100,7 @@ const int CharToValue(char key)
         case 'v': return 0x56;
         case 'w': return 0x57;
         case 'x': return 0x58;
-        case 'y': return 0x58;
+        case 'y': return 0x59;
         case 'z': return 0x5A;
 
         // Special
@@ -107,6 +108,8 @@ const int CharToValue(char key)
         case '\\': return 0xE2;
         case ' ': return 0x20;
         case '-': return 0xBD;
+        case '.': return 0xBE;
+        case ':': return 0xBA; // Needs Shift
 
         // Key not found
         default:
@@ -114,20 +117,39 @@ const int CharToValue(char key)
     }
 }
 
-const void JMacro::Keystroke(KeyCode key)
+const void KeyDown(int key)
 {
     INPUT inputs;
     inputs.type = INPUT_KEYBOARD;
     inputs.ki.wScan = 0;
     inputs.ki.time = 0;
     inputs.ki.dwExtraInfo = 0;
-    inputs.ki.wVk = KeyToValue(key);
+    inputs.ki.wVk = key;
     inputs.ki.dwFlags = 0;
     SendInput(1, &inputs, sizeof(INPUT));
-    Sleep(10);
+}
 
+const void KeyUp(int key)
+{
+    INPUT inputs;
+    inputs.type = INPUT_KEYBOARD;
+    inputs.ki.wScan = 0;
+    inputs.ki.time = 0;
+    inputs.ki.dwExtraInfo = 0;
+    inputs.ki.wVk = key;
     inputs.ki.dwFlags = KEYEVENTF_KEYUP;
     SendInput(1, &inputs, sizeof(INPUT));
+}
+
+const void JMacro::Keystroke(KeyCode key)
+{
+    int intKey = KeyToValue(key);
+
+    if (intKey)
+
+    KeyDown(intKey);
+    Sleep(10);
+    KeyUp(intKey);
 
     return void();
 }
@@ -136,19 +158,10 @@ const void JMacro::TypeText(std::string text)
 {
     for (std::string::size_type i = 0; i < text.size(); i++) 
     {
-        // Set Key Down
-        INPUT inputs;
-        inputs.type = INPUT_KEYBOARD;
-        inputs.ki.wScan = 0;
-        inputs.ki.time = 0;
-        inputs.ki.dwExtraInfo = 0;
-        inputs.ki.wVk = CharToValue(text[i]);
-        inputs.ki.dwFlags = 0;
-        SendInput(1, &inputs, sizeof(INPUT));
-        Sleep(10);
+        int intKey = CharToValue(text[i]);
 
-        // Send Key Up
-        inputs.ki.dwFlags = KEYEVENTF_KEYUP;
-        SendInput(1, &inputs, sizeof(INPUT));
+        KeyDown(intKey);
+        Sleep(10);
+        KeyUp(intKey);
     }
 }

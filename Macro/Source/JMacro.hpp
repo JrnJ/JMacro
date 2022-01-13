@@ -12,7 +12,7 @@ enum class KeyCode
 	A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
 
 	// Special
-	BackSlash, ForwardSlash, Space,
+	BackSlash, ForwardSlash, Space, Dot,
 	
 	// Actions
 	LeftShift, RightShift, LeftCtrl, RightCtrl, LeftAlt, RightAlt, Escape, Tab, Backspace, Enter, CapsLock, 
