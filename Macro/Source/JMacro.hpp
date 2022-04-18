@@ -24,6 +24,10 @@ enum class KeyCode
 	F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12,
 };
 
+enum class MouseButton {
+	LeftMouse, RightMouse, MiddleMouse
+};
+
 namespace JMacro
 {
 	// Mouse
@@ -34,9 +38,14 @@ namespace JMacro
 	// Keyboard
 	const void Keystroke(KeyCode key, bool capital = false);
 	const void Keystroke(int key, bool capital = false); // https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
-	/*const void KeyDown();
-	const void KeyUp();*/
-	const void TypeText(std::string text);
+	const void KeyDown(int key);
+	const void KeyUp(int key);
+	const void TypeText(std::string text); 
+
+	// Mouse Input
+	const void MouseInput(MouseButton button);
+	const void MouseButtonDown(int button);
+	const void MouseButtonUp(int button);
 };
 
 #endif 

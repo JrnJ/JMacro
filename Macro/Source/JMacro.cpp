@@ -47,6 +47,7 @@ const int KeyToValue(KeyCode key)
         case KeyCode::Z: return 0x5A;
 
         // Special
+        case KeyCode::Backspace: return 0x08;
         case KeyCode::BackSlash: return 0xBF;
         case KeyCode::ForwardSlash: return 0xE2;
         case KeyCode::Dot: return 0xBE;
@@ -55,12 +56,37 @@ const int KeyToValue(KeyCode key)
         case KeyCode::Enter: return 0x0D;
         case KeyCode::LeftShift: return 0x10;
         case KeyCode::RightShift: return 0x10;
+
+        // F
+        case KeyCode::F1: return 0x70;
+        case KeyCode::F2: return 0x71;
+        case KeyCode::F3: return 0x72;
+        case KeyCode::F4: return 0x73;
+        case KeyCode::F5: return 0x74;
+        case KeyCode::F6: return 0x75;
+        case KeyCode::F7: return 0x76;
+        case KeyCode::F8: return 0x77;
+        case KeyCode::F9: return 0x78;
+        case KeyCode::F10: return 0x79;
+        case KeyCode::F11: return 0x7A;
+        case KeyCode::F12: return 0x7B;
             
         // Key not found
         default:
             return 0x41;
     }
 }
+
+const int ButtonToValue(MouseButton button) 
+{
+    switch (button)
+    {
+        case MouseButton::LeftMouse: return 0x01;
+        case MouseButton::RightMouse: return 0x02;
+        case MouseButton::MiddleMouse: return 0x04;
+    }
+}
+
 const int CharToValue(char key)
 {
     switch (key)
@@ -117,21 +143,22 @@ const int CharToValue(char key)
         default:
             return 0x30;
     }
-}
+} 
 
-const void KeyDown(int key)
+const void JMacro::KeyDown(int key)
 {
     INPUT inputs;
     inputs.type = INPUT_KEYBOARD;
+
     inputs.ki.wScan = 0;
     inputs.ki.time = 0;
     inputs.ki.dwExtraInfo = 0;
     inputs.ki.wVk = key;
-    inputs.ki.dwFlags = 0;
+    inputs.ki.dwFlags = KEYEVENTF_EXTENDEDKEY;
     SendInput(1, &inputs, sizeof(INPUT));
 }
 
-const void KeyUp(int key)
+const void JMacro::KeyUp(int key)
 {
     INPUT inputs;
     inputs.type = INPUT_KEYBOARD;
@@ -147,10 +174,10 @@ const void KeystrokeCapital(int key)
 {
     int shiftKey = KeyToValue(KeyCode::LeftShift);
 
-    KeyDown(shiftKey);
-    KeyDown(key);
-    KeyUp(key);
-    KeyUp(shiftKey);
+    JMacro::KeyDown(shiftKey);
+    JMacro::KeyDown(key);
+    JMacro::KeyUp(key);
+    JMacro::KeyUp(shiftKey);
 }
 
 const void JMacro::Keystroke(KeyCode key, bool capital)
@@ -195,4 +222,25 @@ const void JMacro::TypeText(std::string text)
             KeyUp(intKey);
         }
     }
+}
+
+const void JMacro::MouseInput(MouseButton button)
+{
+    return void();
+}
+
+const void JMacro::MouseButtonDown(int button)
+{
+    INPUT inputs{ 0 };
+    inputs.type = INPUT_MOUSE;
+    inputs.mi.dwFlags = button;
+    SendInput(1, &inputs, sizeof(INPUT));
+}
+
+const void JMacro::MouseButtonUp(int button)
+{
+    INPUT inputs{ 0 };
+    inputs.type = INPUT_MOUSE;
+    inputs.mi.dwFlags = button;
+    SendInput(1, &inputs, sizeof(INPUT));
 }
