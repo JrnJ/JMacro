@@ -18,9 +18,9 @@ int main()
 		{
 			if (!keyDown)
 			{
-				keyDown = true;
+				//keyDown = true;
 				//JMacro::Keystroke(KeyCode::A);
-				JMacro::KeyDown(0x41);
+				//JMacro::KeyDown(0x41);
 				/*INPUT inputs;
 				inputs.type = INPUT_KEYBOARD;
 
@@ -37,6 +37,21 @@ int main()
 					JMacro::MouseButtonDown(MOUSEEVENTF_LEFTDOWN);
 				else
 					JMacro::MouseButtonDown(MOUSEEVENTF_LEFTUP);*/
+
+				JMacro::SetMousePos(666, 464);
+				Sleep(250);
+				JMacro::MouseInput(MouseButton::LeftMouse);
+				Sleep(1000);
+
+				JMacro::SetMousePos(615, 570);
+				Sleep(250);
+				JMacro::MouseInput(MouseButton::LeftMouse);
+				Sleep(250);
+
+				JMacro::SetMousePos(666, 700);
+				Sleep(250);
+				JMacro::MouseInput(MouseButton::LeftMouse);
+				Sleep(250);
 			}
 		}
 		else keyDown = false;

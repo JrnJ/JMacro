@@ -226,7 +226,9 @@ const void JMacro::TypeText(std::string text)
 
 const void JMacro::MouseInput(MouseButton button)
 {
-    return void();
+    MouseButtonDown(ButtonToValue(button));
+    Sleep(20);
+    MouseButtonUp(ButtonToValue(button));
 }
 
 const void JMacro::MouseButtonDown(int button)
@@ -243,4 +245,9 @@ const void JMacro::MouseButtonUp(int button)
     inputs.type = INPUT_MOUSE;
     inputs.mi.dwFlags = button;
     SendInput(1, &inputs, sizeof(INPUT));
+}
+
+const void JMacro::SetMousePos(int x, int y)
+{
+    SetCursorPos(x, y);
 }

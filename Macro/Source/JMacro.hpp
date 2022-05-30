@@ -46,6 +46,7 @@ namespace JMacro
 	const void MouseInput(MouseButton button);
 	const void MouseButtonDown(int button);
 	const void MouseButtonUp(int button);
+	const void SetMousePos(int x, int y);
 };
 
 #endif 
