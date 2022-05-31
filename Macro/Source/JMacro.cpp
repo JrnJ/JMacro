@@ -77,13 +77,27 @@ const int KeyToValue(KeyCode key)
     }
 }
 
-const int ButtonToValue(MouseButton button) 
+const int ButtonToValue(MouseButton button, bool upEvent = false) 
 {
-    switch (button)
+    if (upEvent)
     {
-        case MouseButton::LeftMouse: return 0x01;
-        case MouseButton::RightMouse: return 0x02;
-        case MouseButton::MiddleMouse: return 0x04;
+        // Up
+        switch (button)
+        {
+            case MouseButton::LeftMouse:    return 0x0004;
+            case MouseButton::RightMouse:   return 0x0010;
+            case MouseButton::MiddleMouse:  return 0x04;
+        }
+    }
+    else
+    {
+        // Down
+        switch (button)
+        {
+            case MouseButton::LeftMouse:    return 0x0002;
+            case MouseButton::RightMouse:   return 0x0008;
+            case MouseButton::MiddleMouse:  return 0x04;
+        }
     }
 }
 
@@ -226,14 +240,14 @@ const void JMacro::TypeText(std::string text)
 
 const void JMacro::MouseInput(MouseButton button)
 {
-    MouseButtonDown(ButtonToValue(button));
-    Sleep(20);
-    MouseButtonUp(ButtonToValue(button));
+    MouseButtonDown(ButtonToValue(button, false));
+    Sleep(10);
+    MouseButtonUp(ButtonToValue(button, true));
 }
 
 const void JMacro::MouseButtonDown(int button)
 {
-    INPUT inputs{ 0 };
+    INPUT inputs{ 1 };
     inputs.type = INPUT_MOUSE;
     inputs.mi.dwFlags = button;
     SendInput(1, &inputs, sizeof(INPUT));
@@ -241,7 +255,7 @@ const void JMacro::MouseButtonDown(int button)
 
 const void JMacro::MouseButtonUp(int button)
 {
-    INPUT inputs{ 0 };
+    INPUT inputs{ 1 };
     inputs.type = INPUT_MOUSE;
     inputs.mi.dwFlags = button;
     SendInput(1, &inputs, sizeof(INPUT));

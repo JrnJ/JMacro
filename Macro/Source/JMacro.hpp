@@ -30,11 +30,6 @@ enum class MouseButton {
 
 namespace JMacro
 {
-	// Mouse
-	//const void MouseButton();
-	//const void MoveMouse();
-	//const void SetMousePosition();
-
 	// Keyboard
 	const void Keystroke(KeyCode key, bool capital = false);
 	const void Keystroke(int key, bool capital = false); // https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes

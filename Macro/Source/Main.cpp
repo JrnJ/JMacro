@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include <Windows.h>
 
@@ -8,52 +9,74 @@ int main()
 {
 	std::cout << "Macro away!" << std::endl;
 
-	bool keyDown = false;
+	bool num7Down = false;
 	bool toggle = false;
+	std::vector<POINT> points{};
 	
 	while (true)
 	{
 		// Alt
-		if ((GetAsyncKeyState(VK_NUMPAD7) & 0x8000) != 0)
+		if ((GetAsyncKeyState(0x31) & 0x8000) != 0)
 		{
-			if (!keyDown)
+			if (!num7Down)
 			{
-				//keyDown = true;
-				//JMacro::Keystroke(KeyCode::A);
-				//JMacro::KeyDown(0x41);
-				/*INPUT inputs;
-				inputs.type = INPUT_KEYBOARD;
+				num7Down = true;
 
-				inputs.ki.wScan = 0x3042;
-				inputs.ki.time = 0;
-				inputs.ki.dwExtraInfo = 0;
-				inputs.ki.wVk = 0;
-				inputs.ki.dwFlags = KEYEVENTF_UNICODE;
-				SendInput(1, &inputs, sizeof(INPUT));*/
+				POINT point;
+				if (GetCursorPos(&point)) {
+					points.push_back(point);
+					JMacro::MouseInput(MouseButton::LeftMouse);
+				}
 
-				/*toggle = !toggle;
+				/*for (int i = 0; i < 20; i++) 
+				{
+					JMacro::SetMousePos(566, 427);
+					JMacro::MouseInput(MouseButton::LeftMouse);
+					Sleep(100);
 
-				if (toggle)
-					JMacro::MouseButtonDown(MOUSEEVENTF_LEFTDOWN);
-				else
-					JMacro::MouseButtonDown(MOUSEEVENTF_LEFTUP);*/
+					JMacro::SetMousePos(530, 407);
+					JMacro::MouseInput(MouseButton::LeftMouse);
+					Sleep(10);
 
-				JMacro::SetMousePos(666, 464);
-				Sleep(250);
-				JMacro::MouseInput(MouseButton::LeftMouse);
-				Sleep(1000);
+					JMacro::SetMousePos(570, 510);
+					JMacro::MouseInput(MouseButton::LeftMouse);
+					Sleep(333);
+				}*/
 
-				JMacro::SetMousePos(615, 570);
-				Sleep(250);
-				JMacro::MouseInput(MouseButton::LeftMouse);
-				Sleep(250);
-
-				JMacro::SetMousePos(666, 700);
-				Sleep(250);
-				JMacro::MouseInput(MouseButton::LeftMouse);
-				Sleep(250);
+				
+				
+				std::cout << "Finished" << std::endl;
 			}
 		}
-		else keyDown = false;
+		else num7Down = false;
+
+		bool num8Down = false;
+
+		if ((GetAsyncKeyState(0x32) & 0x8000) != 0)
+		{
+			if (!num8Down)
+			{
+				num8Down = true;
+
+				for (int i = 0; i < 10; i++)
+				{
+					JMacro::SetMousePos(points[0].x, points[0].y);
+					Sleep(20);
+					JMacro::MouseInput(MouseButton::LeftMouse);
+					Sleep(100);
+
+					JMacro::SetMousePos(points[1].x, points[1].y);
+					Sleep(20);
+					JMacro::MouseInput(MouseButton::LeftMouse);
+					Sleep(50);
+
+					JMacro::SetMousePos(points[2].x, points[2].y);
+					Sleep(20);
+					JMacro::MouseInput(MouseButton::LeftMouse);
+					Sleep(500);
+				}
+			}
+		}
+		else num8Down = false;
 	}
 }
