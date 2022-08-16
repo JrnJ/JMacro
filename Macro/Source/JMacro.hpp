@@ -12,10 +12,10 @@ enum class KeyCode
 	A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
 
 	// Special
-	BackSlash, ForwardSlash, Space, Dot,
-	
+	BackSlash, ForwardSlash, Space, Dot, Tilde,
+
 	// Actions
-	LeftShift, RightShift, LeftCtrl, RightCtrl, LeftAlt, RightAlt, Escape, Tab, Backspace, Enter, CapsLock, 
+	LeftShift, RightShift, LeftCtrl, RightCtrl, LeftAlt, RightAlt, Escape, Tab, Backspace, Enter, CapsLock,
 
 	// Arrows
 	ArrowUp, ArrowDown, ArrowLeft, ArrowRight,
@@ -25,19 +25,50 @@ enum class KeyCode
 };
 
 enum class MouseButton {
-	LeftMouse, RightMouse, MiddleMouse
+	// Left
+	LeftMouse,
+
+	// Right
+	RightMouse,
+
+	// Middle
+	MiddleMouse,
+};
+
+enum class MouseEvent {
+	LeftMouseDown, LeftMouseUp,
+
+	RightMouseDown, RightMouseUp,
+
+	MiddleMouseDown, MiddleMouseUp
 };
 
 namespace JMacro
 {
 	// Keyboard
-	const void Keystroke(KeyCode key, bool capital = false);
-	const void Keystroke(int key, bool capital = false); // https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+	extern bool Keys[1024];
+	extern bool PressedKeys[1024];
+
+	// Get
+	const bool GetKey(KeyCode key);
+	const bool GetKeyDown(int key);
+	const bool GetKeyUp(int key);
+
+	// Set
+	const void Keystroke(int key);
 	const void KeyDown(int key);
 	const void KeyUp(int key);
-	const void TypeText(std::string text); 
+
+	// https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+	const void Keystroke(KeyCode key);
+	const void KeyDown(KeyCode key);
+	const void KeyUp(KeyCode key);
+	const void TypeText(std::string text);
 
 	// Mouse Input
+	// Get
+
+	// Set
 	const void MouseInput(MouseButton button);
 	const void MouseButtonDown(int button);
 	const void MouseButtonUp(int button);

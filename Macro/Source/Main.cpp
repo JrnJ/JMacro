@@ -9,74 +9,37 @@ int main()
 {
 	std::cout << "Macro away!" << std::endl;
 
-	bool num7Down = false;
+	bool keyDown = false;
 	bool toggle = false;
-	std::vector<POINT> points{};
-	
 	while (true)
 	{
 		// Alt
-		if ((GetAsyncKeyState(0x31) & 0x8000) != 0)
+		if ((GetAsyncKeyState(VK_NUMPAD7) & 0x8000) != 0)
 		{
-			if (!num7Down)
+			if (!keyDown)
 			{
-				num7Down = true;
+				keyDown = true;
 
-				POINT point;
-				if (GetCursorPos(&point)) {
-					points.push_back(point);
-					JMacro::MouseInput(MouseButton::LeftMouse);
-				}
-
-				/*for (int i = 0; i < 20; i++) 
+				for (int i = 0; i < 2; ++i)
 				{
-					JMacro::SetMousePos(566, 427);
-					JMacro::MouseInput(MouseButton::LeftMouse);
-					Sleep(100);
-
-					JMacro::SetMousePos(530, 407);
-					JMacro::MouseInput(MouseButton::LeftMouse);
-					Sleep(10);
-
-					JMacro::SetMousePos(570, 510);
-					JMacro::MouseInput(MouseButton::LeftMouse);
-					Sleep(333);
-				}*/
-
-				
-				
-				std::cout << "Finished" << std::endl;
-			}
-		}
-		else num7Down = false;
-
-		bool num8Down = false;
-
-		if ((GetAsyncKeyState(0x32) & 0x8000) != 0)
-		{
-			if (!num8Down)
-			{
-				num8Down = true;
-
-				for (int i = 0; i < 10; i++)
-				{
-					JMacro::SetMousePos(points[0].x, points[0].y);
+					JMacro::Keystroke(KeyCode::BackSlash);
 					Sleep(20);
-					JMacro::MouseInput(MouseButton::LeftMouse);
-					Sleep(100);
-
-					JMacro::SetMousePos(points[1].x, points[1].y);
+					JMacro::TypeText("kill Jeroen");
 					Sleep(20);
-					JMacro::MouseInput(MouseButton::LeftMouse);
-					Sleep(50);
+					JMacro::Keystroke(KeyCode::Enter);
 
-					JMacro::SetMousePos(points[2].x, points[2].y);
-					Sleep(20);
+					Sleep(1000);
 					JMacro::MouseInput(MouseButton::LeftMouse);
+
 					Sleep(500);
+					JMacro::Keystroke(KeyCode::BackSlash);
+					Sleep(20);
+					JMacro::TypeText("setblock ~ ~-1 ~ bedrock");
+					Sleep(20);
+					JMacro::Keystroke(KeyCode::Enter);
 				}
 			}
+			else keyDown = false;
 		}
-		else num8Down = false;
 	}
 }
