@@ -73,6 +73,9 @@ namespace JMacro
 	const void MouseButtonDown(int button);
 	const void MouseButtonUp(int button);
 	const void SetMousePos(int x, int y);
+
+	// Other
+	const std::string GetClipBoardText();
 };
 
 #endif 

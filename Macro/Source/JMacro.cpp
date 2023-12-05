@@ -60,6 +60,9 @@ const int KeyToValue(KeyCode key)
     case KeyCode::Enter: return 0x0D;
     case KeyCode::LeftShift: return 0x10;
     case KeyCode::RightShift: return 0x10;
+    case KeyCode::LeftCtrl: return 0x11;
+    case KeyCode::RightCtrl: return 0x11;
+    case KeyCode::Space: return 0x20;
 
         // F
     case KeyCode::F1:  return 0x70;
@@ -265,3 +268,39 @@ const void JMacro::SetMousePos(int x, int y)
 }
 
 // Mouse //
+
+// <Other> //
+const std::string JMacro::GetClipBoardText()
+{
+    // Try opening the clipboard
+    if (!OpenClipboard(nullptr))
+    {
+
+    }
+
+    // Get handle of clipboard object for ANSI text
+    HANDLE hData = GetClipboardData(CF_TEXT);
+    if (hData == nullptr)
+    {
+        
+    }
+
+    // Lock the handle to get the actual text pointer
+    char* pszText = static_cast<char*>(GlobalLock(hData));
+    if (pszText == nullptr)
+    {
+
+    }
+
+    // Save text in a string class instance
+    std::string text(pszText);
+
+    // Release the lock
+    GlobalUnlock(hData);
+
+    // Release the clipboard
+    CloseClipboard();
+
+    return text;
+}
+// </Other> //

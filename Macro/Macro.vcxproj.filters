@@ -21,10 +21,21 @@
     <ClCompile Include="Source\JMacro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Screenshot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\JMacro.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Screenshot.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Source\Macros\nh.txt" />
+    <Text Include="Source\Macros\koennehalloween.txt" />
+    <Text Include="Source\Macros\boekdownloader.txt" />
   </ItemGroup>
 </Project>

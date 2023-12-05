@@ -3,6 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+[Mm]acro/[Ss]ource/[Mm]acros/*
+
 # User-specific files
 *.rsuser
 *.suo
